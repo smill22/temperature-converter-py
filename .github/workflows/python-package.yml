@@ -1,0 +1,31 @@
+name: Python Application Tests
+
+# Controls when the workflow will run
+on:
+  push: # Run on every push to any branch
+    branches: [ main, master ] # Adjust if your main branch has a different name
+  pull_request: # Run on pull requests targeted at these branches
+    branches: [ main, master ] # Adjust if your main branch has a different name
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # Use the latest Ubuntu runner
+
+    steps:
+    - uses: actions/checkout@v4 # Step to check out your repository's code
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x' # Use a generic recent Python 3 version
+
+    - name: Install dependencies (if any)
+      run: |
+        python -m pip install --upgrade pip
+        # If you had a requirements.txt file for other dependencies,
+        # you would install them here using:
+        # pip install -r requirements.txt
+
+    - name: Run tests
+      run: |
+        python -m unittest test_temperature_converter.py
